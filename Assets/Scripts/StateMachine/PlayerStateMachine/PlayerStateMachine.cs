@@ -12,6 +12,8 @@ public class PlayerStateMachine : MonoBehaviour
     [SerializeField] float jumpHeight = 3f;
     [SerializeField] float gravityMultiplier;
     private bool isJumping = false;
+    private float initialJump = 0.3f;
+    private float mayJump;
     private float gravity;
     public static PlayerStateMachine Instance { get; private set; }
 
@@ -22,23 +24,9 @@ public class PlayerStateMachine : MonoBehaviour
     }
     private void Update()
     {
-        playerGrounded = _characterController.isGrounded;
-        if (playerGrounded && playerVelocity.y < 0)
-        {
-            playerVelocity.y = 0f;
-        }
-
-
-        gravity = gravityValue * gravityMultiplier;
-
-        if(!isJumping && playerVelocity.y > 0)
-        {
-            gravity *= 2;
-        }
-        playerVelocity.y += gravity * Time.deltaTime;
-
-
         Jump();
+        GroundingCheck();
+        FallCheck();
     }
 
     public void ProcessMove(Vector2 input)
@@ -62,11 +50,41 @@ public class PlayerStateMachine : MonoBehaviour
     {
         if (isJumping)
         {
-            if (playerGrounded)
+            if (playerGrounded || mayJump > 0 && playerVelocity.y < 0.5f)
             {
                 playerVelocity.y = Mathf.Sqrt(jumpHeight * -3.0f * gravity);
             }
         }
+    }
+
+    private void GroundingCheck()
+    {
+
+        playerGrounded = _characterController.isGrounded;
+        if (playerGrounded && playerVelocity.y < 0)
+        {
+            playerVelocity.y = 0f;
+        }
+
+        if (!playerGrounded)
+        {
+            mayJump -= Time.deltaTime;
+        }
+        else if (playerGrounded)
+        {
+            mayJump = initialJump;
+        }
+    }
+
+    private void FallCheck()
+    {
+        gravity = gravityValue * gravityMultiplier;
+
+        if (!isJumping && playerVelocity.y > 0)
+        {
+            gravity *= 2;
+        }
+        playerVelocity.y += gravity * Time.deltaTime;
     }
 
 }

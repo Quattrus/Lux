@@ -24,7 +24,8 @@ public class PlayerController : MonoBehaviour
         playerInput = new Player();
         movement = new Player().Movement;
         playerStateMachine = GetComponent<PlayerStateMachine>();
-        movement.PlayerJump.performed += ctx => playerStateMachine.Jump();
+        movement.JumpStart.performed += ctx => playerStateMachine.JumpStart();
+        movement.JumpFinish.performed += ctx => playerStateMachine.JumpFinished();
     }
 
 

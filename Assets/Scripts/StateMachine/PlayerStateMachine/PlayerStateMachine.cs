@@ -10,7 +10,9 @@ public class PlayerStateMachine : MonoBehaviour
     [SerializeField] float playerSpeed = 2.0f;
     [SerializeField] float gravityValue = -9.8f;
     [SerializeField] float jumpHeight = 3f;
-
+    [SerializeField] float gravityMultiplier;
+    private bool isJumping = false;
+    private float gravity;
     public static PlayerStateMachine Instance { get; private set; }
 
 
@@ -26,8 +28,17 @@ public class PlayerStateMachine : MonoBehaviour
             playerVelocity.y = 0f;
         }
 
-        playerVelocity.y += gravityValue * Time.deltaTime;
-        Debug.Log(playerVelocity.y);
+
+        gravity = gravityValue * gravityMultiplier;
+
+        if(!isJumping && playerVelocity.y > 0)
+        {
+            gravity *= 2;
+        }
+        playerVelocity.y += gravity * Time.deltaTime;
+
+
+        Jump();
     }
 
     public void ProcessMove(Vector2 input)
@@ -35,13 +46,27 @@ public class PlayerStateMachine : MonoBehaviour
         Vector3 move = new Vector3(input.x, playerVelocity.y, input.y);
         _characterController.Move(move * Time.deltaTime * playerSpeed);
     }
-    public void Jump()
+
+    public void JumpStart()
     {
-        if (playerGrounded)
+        isJumping = true;
+    }
+
+    public void JumpFinished()
+    {
+        isJumping = false;
+    }
+
+
+    private void Jump()
+    {
+        if (isJumping)
         {
-            playerVelocity.y = Mathf.Sqrt(jumpHeight * -3.0f * gravityValue * 0.5f);
+            if (playerGrounded)
+            {
+                playerVelocity.y = Mathf.Sqrt(jumpHeight * -3.0f * gravity);
+            }
         }
-      
     }
 
 }

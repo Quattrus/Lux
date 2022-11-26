@@ -15,13 +15,22 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "PlayerJump",
+                    "name": "JumpStart",
                     "type": "Button",
-                    "id": "4a21e7c9-3545-49ac-a226-df02ff9b80f4",
+                    "id": "7447078f-3786-4b7a-9058-ea15a54ab994",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": true
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "JumpFinish",
+                    "type": "Button",
+                    "id": "080c7e8f-7730-4ff5-9ba9-e05c0a25099b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -126,23 +135,45 @@
                 },
                 {
                     "name": "",
-                    "id": "5441c08b-ee88-48d7-9f50-bc33b239f5e7",
+                    "id": "147a7e36-60a7-49c5-9b18-26a62cbed919",
                     "path": "<Keyboard>/space",
-                    "interactions": "",
+                    "interactions": "Press",
                     "processors": "",
                     "groups": "",
-                    "action": "PlayerJump",
+                    "action": "JumpStart",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "3b64e191-0eb0-4bdf-b832-c2d2594e699f",
-                    "path": "<XInputController>/buttonSouth",
-                    "interactions": "",
+                    "id": "acececc9-e1cb-43a5-bc9f-7f6eb48a25fe",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "Press",
                     "processors": "",
                     "groups": "",
-                    "action": "PlayerJump",
+                    "action": "JumpStart",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b7bccfb4-b324-45b3-b68e-5f3cdd978e81",
+                    "path": "<Keyboard>/space",
+                    "interactions": "Press(behavior=1)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "JumpFinish",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "58b47bdc-0d2f-4293-b677-397bc49de876",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "Press(behavior=1)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "JumpFinish",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
